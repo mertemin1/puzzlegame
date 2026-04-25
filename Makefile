@@ -3,8 +3,8 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -I. -MMD -MP
 
 # --- DOSYALAR ---
-# Derlenecek bütün .cpp dosyalarımız
-SRCS = main.cpp grid.cpp sprite.cpp textures.cpp
+# Derlenecek bütün .cpp dosyalarımız (textures.cpp çıkarıldı)
+SRCS = main.cpp grid.cpp sprite.cpp
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(OBJS:.o=.d)
 
@@ -17,8 +17,8 @@ ifeq ($(OS),Windows_NT)
     CXXFLAGS += -I$(SFML_DIR)/include -DSFML_STATIC
     LDFLAGS = -static -static-libgcc -static-libstdc++ -L$(SFML_DIR)/lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lgdi32 -lwinmm -lfreetype -luser32 -lkernel32 -lshell32
     
-    # Temizleme komutu (Windows cmd için)
-    CLEAN_CMD = del /Q *.o $(TARGET)
+    # Temizleme komutu (Windows cmd için - .d dosyaları eklendi)
+    CLEAN_CMD = del /Q *.o *.d $(TARGET)
 else
     # LINUX AYARLARI
     TARGET = Sokoban
@@ -30,8 +30,8 @@ else
     # Linux'ta dinamik kütüphaneleri (.so) bulabilmesi için rpath ekliyoruz
     LDFLAGS = -L$(SFML_DIR)/lib -Wl,-rpath=$(SFML_DIR)/lib -lsfml-graphics -lsfml-window -lsfml-system
     
-    # Temizleme komutu (Linux bash için)
-    CLEAN_CMD = rm -f *.o $(TARGET)
+    # Temizleme komutu (Linux bash için - .d dosyaları eklendi)
+    CLEAN_CMD = rm -f *.o *.d $(TARGET)
 endif
 
 # --- DERLEME KURALLARI ---
@@ -43,7 +43,7 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
 
-# .cpp dosyalarını .o (object) dosyalarına çevirme
+# .cpp dosyalarını .o (object) ve .d dosyalarına çevirme
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
