@@ -1,43 +1,92 @@
+# C++ SFML Puzzle Game 🧩
 
-# C++ SFML Puzzle Game
+This repository contains a grid-based puzzle game engine built with C++17 and the SFML library. The game mechanics are inspired by the classic Sokoban. 📦
 
-This is a grid-based puzzle engine built with C++17 and SFML, inspired by the classic mechanics of Sokoban.
+## Table of Contents 📄
 
-## How to Run
+- [Project Title & Badges](#)
+- [Description](#)
+- [Features](#)
+- [Tech Stack](#)
+- [Installation](#)
+- [Usage](#)
+- [How to Use](#)
+- [Project Structure](#)
+- [Contributing](#)
+- [License](#)
+- [Important Links](#)
+- [Footer](#)
 
-Follow these steps in your terminal to compile and launch the game with a specific level:
+## Features ✨
 
-1. **Build:**
-   ```bash
-   make
-   
+- **Grid-Based Puzzle Gameplay:** Navigate a character through a grid, pushing boxes onto target locations. 🗺️
+- **Sokoban Mechanics:** Implements the core Sokoban gameplay where players can only push boxes, not pull them. 🧱
+- **Level Loading:** Supports custom levels defined in `.txt` files, allowing for easy level creation and modification. 📝
+- **SFML Graphics:** Utilizes the Simple and Fast Multimedia Library (SFML) for rendering graphics, handling input, and managing the game window. 🖼️
+- **C++17:** Developed using modern C++ standards for robust and efficient code. 🚀
+- **Texture Management:** Efficiently loads and manages game textures to optimize performance. 🎨
 
-2. **Run (Providing a level file):**
-   ```bash
-   ./Sokoban.exe levels/level1.txt
-   ```
-   *Note: Use `./Sokoban levels/level1.txt` if you are on Linux.*
+## Tech Stack 💻
 
-## Gameplay and Controls
-* **Movement:** Use **W, A, S, D** keys to move.
-* **Goal:** Push all boxes onto the designated target points to complete the level.
-* **Mechanics:** You can only push one box at a time; pulling is not allowed.
+- **Language:** C++17
+- **Graphics Library:** SFML (Simple and Fast Multimedia Library)
 
-## Creating New Levels
+## Installation 🛠️
 
-Levels are loaded from `.txt` files located in the `levels/` directory. To create a custom map, use the following format:
+To build and run the game, you will need a C++ compiler that supports C++17 and the SFML library installed on your system.
 
-* **Line 1:** Map Width and Height (e.g., `10 10`)
-* **Subsequent Lines:** The map layout using specific characters.
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/mertemin1/puzzlegame.git
+    cd puzzlegame
+    ```
 
-### Map Legend:
-* `#` : Wall
-* `!` : Player starting position
-* `o` : Pushable box
-* `?` : Target point
-* ` ` (Space) : Floor
+2.  **Build the Game:**
+    Ensure you have SFML installed and configured. Then, use the provided Makefile to compile the project:
+    ```bash
+    make
+    ```
 
-### Example Map File (level_test.txt):
+## Usage 🎮
+
+The game is executed from the terminal, requiring a level file as a command-line argument.
+
+**Running a Level:**
+
+To launch the game with a specific level (e.g., `level1.txt`):
+
+*   **On Windows:**
+    ```bash
+    ./Sokoban.exe levels/level1.txt
+    ```
+
+*   **On Linux:**
+    ```bash
+    ./Sokoban levels/level1.txt
+    ```
+
+## How to Use 🕹️
+
+**Gameplay Controls:**
+
+-   **Movement:** Use the **W, A, S, D** keys to move your character. ⬆️ ⬅️ ⬇️ ➡️
+-   **Objective:** The goal of each level is to push all the boxes (`o`) onto the designated target points (`?`).
+-   **Mechanics:** You can only push one box at a time. Pulling boxes is not allowed.
+
+**Creating New Levels:**
+
+New levels can be created by defining them in `.txt` files within the `levels/` directory. Each level file should follow this format:
+
+1.  **Line 1:** The map's width and height, separated by a space (e.g., `10 10`).
+2.  **Subsequent Lines:** The map layout using the following characters:
+    *   `#`: Wall 🧱
+    *   `!`: Player's starting position 🧍
+    *   `o`: Pushable box 📦
+    *   `?`: Target point 🎯
+    *   ` `: Floor . 
+
+**Example Level File (`levels/example_level.txt`):**
+
 ```text
 7 5
 #######
@@ -47,9 +96,42 @@ Levels are loaded from `.txt` files located in the `levels/` directory. To creat
 #######
 ```
 
-## Project Structure
-* **main.cpp**: Entry point, game loop, and input handling.
-* **grid.cpp/hpp**: Handles map data, rendering layers, and win-condition logic.
-* **sprite.cpp/hpp**: Manages movement physics and box-pushing interactions.
-* **textures.cpp/hpp**: Global texture management and asset optimization.
-```
+## Project Structure 📁
+
+-   **`main.cpp`**: The entry point of the application, handling the game loop, window management, and input processing.
+-   **`grid.cpp` / `grid.hpp`**: Manages the game grid, including map data, object placement, rendering layers, and win-condition logic.
+-   **`sprite.cpp` / `sprite.hpp`**: Handles the behavior and rendering of game entities (player, boxes, walls), including movement physics and interaction logic.
+-   **`src/`**: Contains texture files (e.g., `character.png`, `box.png`, `wall.png`, `floor.png`, `target.png`).
+-   **`levels/`**: Directory for level definition files (`.txt`).
+-   **`Makefile`**: Contains build instructions for compiling the game.
+-   **`SFML/`**: Directory containing SFML library headers and configuration files for different platforms (Linux, Windows).
+
+## Contributing 🤝
+
+Contributions are welcome! Please feel free to:
+
+-   Fork the repository.
+-   Create a new branch for your feature or bug fix.
+-   Make your changes and submit a pull request.
+-   If you find a bug, please open an issue.
+
+## License 📜
+
+This project does not specify a license. Please refer to the GitHub repository for more details.
+
+## Important Links 🔗
+
+-   **GitHub Repository:** [https://github.com/mertemin1/puzzlegame](https://github.com/mertemin1/puzzlegame)
+
+## Footer 
+
+© 2023 mertemin1 | [puzzlegame Repository](https://github.com/mertemin1/puzzlegame) | [Author's Profile](https://github.com/mertemin1)
+
+--- 
+
+**Like this project?** ⭐ Star it | 🍴 Fork it | 👍 Follow the author
+
+
+
+---
+**<p align="center">Generated by [ReadmeCodeGen](https://www.readmecodegen.com/)</p>**
