@@ -1,91 +1,96 @@
-# C++ SFML Puzzle Game 🧩
+# C++17 & SFML 2D Grid Puzzle Engine (Sokoban) 📦
 
-This repository contains a grid-based puzzle game engine built with C++17 and the SFML library. The game mechanics are inspired by the classic Sokoban. 📦
+**Developer:** Mert Emin İlhan  
+**Repository:** [https://github.com/mertemin1/puzzlegame](https://github.com/mertemin1/puzzlegame)  
 
-## Table of Contents 📄
+A 2D grid-based puzzle game engine built from scratch using **Modern C++ (C++17)** and the **SFML (Simple and Fast Multimedia Library)**. Inspired by classic *Sokoban* mechanics, the engine features an object-oriented entity/grid architecture, a custom text-based level parser, and a cross-platform `Makefile` build system.
 
-- [Project Title & Badges](#)
-- [Description](#)
-- [Features](#)
-- [Tech Stack](#)
-- [Installation](#)
-- [Usage](#)
-- [How to Use](#)
-- [Project Structure](#)
-- [Contributing](#)
-- [License](#)
-- [Important Links](#)
-- [Footer](#)
+[![Language: C++17](https://img.shields.io/badge/Language-C%2B%2B17-blue.svg)](https://isocpp.org/)
+[![Library: SFML](https://img.shields.io/badge/Library-SFML-green.svg)](https://www.sfml-dev.org/)
+[![Platform: Linux & Windows](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg)](#)
 
-## Features ✨
+---
 
-- **Grid-Based Puzzle Gameplay:** Navigate a character through a grid, pushing boxes onto target locations. 🗺️
-- **Sokoban Mechanics:** Implements the core Sokoban gameplay where players can only push boxes, not pull them. 🧱
-- **Level Loading:** Supports custom levels defined in `.txt` files, allowing for easy level creation and modification. 📝
-- **SFML Graphics:** Utilizes the Simple and Fast Multimedia Library (SFML) for rendering graphics, handling input, and managing the game window. 🖼️
-- **C++17:** Developed using modern C++ standards for robust and efficient code. 🚀
-- **Texture Management:** Efficiently loads and manages game textures to optimize performance. 🎨
+## ✨ Technical Features & Architecture
 
-## Tech Stack 💻
+- **Object-Oriented Grid & Entity System:** Encapsulates map layout, rendering layers, and game state validation within `Grid` (`grid.cpp`/`grid.hpp`) while managing entity movement, collision rules, and sprite rendering via `Sprite` (`sprite.cpp`/`sprite.hpp`).
+- **Custom Level Parser:** Dynamically constructs 2D game worlds of arbitrary dimensions at runtime by parsing human-readable `.txt` map files passed via command-line arguments.
+- **Sokoban Collision & Push Physics:** Implements directional tile-based collision detection—allowing the player to push single boxes onto target coordinates while preventing box pulling or multi-box pushing.
+- **Win-Condition State Tracking:** Continuously evaluates target tile occupancy during the game loop; once all boxes (`o`) align with target points (`?`), the engine outputs a completion log (`<level_path> finished. Congratulations`) to the standard output and cleanly terminates the SFML window (`window.close()`).
+- **Cross-Platform Build System:** Includes a custom `Makefile` that automatically detects the host OS (`Windows_NT` vs. Linux) and links against the bundled platform-specific SFML headers and binaries (`SFML/windows` or `SFML/linux`).
 
-- **Language:** C++17
-- **Graphics Library:** SFML (Simple and Fast Multimedia Library)
+---
 
-## Installation 🛠️
+## 🛠️ Tech Stack
 
-To build and run the game, you will need a C++ compiler that supports C++17 and the SFML library installed on your system.
+- **Language:** C++17 (`g++`)
+- **Multimedia & Graphics API:** SFML (Graphics, Window, System modules)
+- **Build System:** GNU Make (Cross-platform `Makefile`)
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/mertemin1/puzzlegame.git
-    cd puzzlegame
-    ```
+---
 
-2.  **Build the Game:**
-    Ensure you have SFML installed and configured. Then, use the provided Makefile to compile the project:
-    ```bash
-    make
-    ```
+## 🚀 Building the Project
 
-## Usage 🎮
+Ensure you have **`g++`** (with C++17 support) and **GNU Make** installed on your system. Platform-specific SFML configurations are organized inside the `SFML/` directory.
 
-The game is executed from the terminal, requiring a level file as a command-line argument.
+```bash
+# Clone the repository
+git clone https://github.com/mertemin1/puzzlegame.git
+cd puzzlegame
 
-**Running a Level:**
+# Compile the project using Make
+make
+```
 
-To launch the game with a specific level (e.g., `level1.txt`):
+- **On Windows:** Produces `Sokoban.exe` linked against `SFML/windows`.
+- **On Linux:** Produces `Sokoban` linked against `SFML/linux`.
 
-*   **On Windows:**
-    ```bash
-    ./Sokoban.exe levels/level1.txt
-    ```
+---
 
-*   **On Linux:**
-    ```bash
-    ./Sokoban levels/level1.txt
-    ```
+## 📖 Usage & Gameplay
 
-## How to Use 🕹️
+The executable requires the path to a level configuration file as a command-line argument. Four pre-built levels (`level1.txt` to `level4.txt`) are available in the `levels/` directory.
 
-**Gameplay Controls:**
+### Running a Level
 
--   **Movement:** Use the **W, A, S, D** keys to move your character. ⬆️ ⬅️ ⬇️ ➡️
--   **Objective:** The goal of each level is to push all the boxes (`o`) onto the designated target points (`?`).
--   **Mechanics:** You can only push one box at a time. Pulling boxes is not allowed.
+- **Linux:**
+  ```bash
+  ./Sokoban levels/level1.txt
+  ```
+- **Windows:**
+  ```bash
+  ./Sokoban.exe levels/level1.txt
+  ```
 
-**Creating New Levels:**
+### Controls & Mechanics
 
-New levels can be created by defining them in `.txt` files within the `levels/` directory. Each level file should follow this format:
+| Key | Action |
+| :---: | :--- |
+| **`W`** | Move Up |
+| **`A`** | Move Left |
+| **`S`** | Move Down |
+| **`D`** | Move Right |
 
-1.  **Line 1:** The map's width and height, separated by a space (e.g., `10 10`).
-2.  **Subsequent Lines:** The map layout using the following characters:
-    *   `#`: Wall 🧱
-    *   `!`: Player's starting position 🧍
-    *   `o`: Pushable box 📦
-    *   `?`: Target point 🎯
-    *   ` `: Floor . 
+- **Objective:** Push every box onto a designated target tile. When all target tiles are occupied, the level is completed, a congratulatory message is printed to the terminal, and the game window closes automatically.
 
-**Example Level File (`levels/example_level.txt`):**
+---
+
+## 🗺️ Custom Level Design Format
+
+You can create custom levels by adding new `.txt` files inside the `levels/` directory:
+
+1. **Header (Line 1):** Two space-separated integers defining the grid's `width` and `height` (e.g., `7 5`).
+2. **Grid Layout (Subsequent Lines):** ASCII characters representing the entities on each tile:
+
+| Character | Entity / Tile Type | Description |
+| :---: | :--- | :--- |
+| `#` | **Wall** | Impassable boundary or obstacle tile (`wall.png`) |
+| `!` | **Player** | Starting position of the player character (`character.png`) |
+| `o` | **Box** | Pushable crate entity (`box.png`) |
+| `?` | **Target** | Goal coordinate where a box must be placed (`target.png`) |
+| ` ` *(Space)* | **Floor** | Empty walkable background tile (`floor.png`) |
+
+### Example Level File (`levels/example_level.txt`)
 
 ```text
 7 5
@@ -96,42 +101,34 @@ New levels can be created by defining them in `.txt` files within the `levels/` 
 #######
 ```
 
-## Project Structure 📁
+---
 
--   **`main.cpp`**: The entry point of the application, handling the game loop, window management, and input processing.
--   **`grid.cpp` / `grid.hpp`**: Manages the game grid, including map data, object placement, rendering layers, and win-condition logic.
--   **`sprite.cpp` / `sprite.hpp`**: Handles the behavior and rendering of game entities (player, boxes, walls), including movement physics and interaction logic.
--   **`src/`**: Contains texture files (e.g., `character.png`, `box.png`, `wall.png`, `floor.png`, `target.png`).
--   **`levels/`**: Directory for level definition files (`.txt`).
--   **`Makefile`**: Contains build instructions for compiling the game.
--   **`SFML/`**: Directory containing SFML library headers and configuration files for different platforms (Linux, Windows).
+## 📁 Project Structure
 
-## Contributing 🤝
-
-Contributions are welcome! Please feel free to:
-
--   Fork the repository.
--   Create a new branch for your feature or bug fix.
--   Make your changes and submit a pull request.
--   If you find a bug, please open an issue.
-
-## License 📜
-
-This project does not specify a license. Please refer to the GitHub repository for more details.
-
-## Important Links 🔗
-
--   **GitHub Repository:** [https://github.com/mertemin1/puzzlegame](https://github.com/mertemin1/puzzlegame)
-
-## Footer 
-
-© 2023 mertemin1 | [puzzlegame Repository](https://github.com/mertemin1/puzzlegame) | [Author's Profile](https://github.com/mertemin1)
-
---- 
-
-**Like this project?** ⭐ Star it | 🍴 Fork it | 👍 Follow the author
-
-
+```text
+puzzlegame/
+├── main.cpp                # Application entry point, CLI parsing, game loop & window termination
+├── grid.cpp / grid.hpp     # 2D map parsing, layered rendering & win-condition evaluation
+├── sprite.cpp / sprite.hpp # Entity behavior, W/A/S/D input handling & push collision logic
+├── Makefile                # OS-aware cross-platform build script (Windows & Linux)
+├── levels/                 # Custom ASCII level definition files
+│   ├── level1.txt
+│   ├── level2.txt
+│   ├── level3.txt
+│   └── level4.txt
+├── src/                    # 2D sprite & tile texture assets
+│   ├── box.png
+│   ├── character.png
+│   ├── floor.png
+│   ├── target.png
+│   └── wall.png
+└── SFML/                   # Platform-specific SFML headers and library files
+    ├── linux/
+    └── windows/
+```
 
 ---
-**<p align="center">Generated by [ReadmeCodeGen](https://www.readmecodegen.com/)</p>**
+
+## 📄 License
+
+This project is open-source and available under the MIT License.
